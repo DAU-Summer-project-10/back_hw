@@ -42,6 +42,7 @@ public class UserController {
             );
             scheduleRepository.save(schedule);
 
+
             return "일정 저장 성공!";
         } catch (Exception e) {
             return "일정 저장 실패: " + e.getMessage();
