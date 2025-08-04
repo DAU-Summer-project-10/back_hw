@@ -7,6 +7,8 @@ import com.example.schedule.repository.ScheduleRepository;
 import com.example.schedule.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/user")
@@ -47,6 +49,23 @@ public class UserController {
         } catch (Exception e) {
             return "일정 저장 실패: " + e.getMessage();
         }
+    }
+    @DeleteMapping("/deleteSchedule/{id}")
+    public String deleteSchedule(@PathVariable Long id) {
+        try {
+            if (!scheduleRepository.existsById(id)) {
+                return "해당 ID의 일정이 존재하지 않습니다.";
+            }
+
+            scheduleRepository.deleteById(id);
+            return "일정 삭제 성공!";
+        } catch (Exception e) {
+            return "일정 삭제 실패: " + e.getMessage();
+        }
+    }
+    @GetMapping("/getAllUserInfo/{userId}")
+    public List<Schedule> getSchedulesByUser(@PathVariable String userId) {
+        return scheduleRepository.findByUserId(userId);
     }
 
 }
